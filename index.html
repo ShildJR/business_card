@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Визитная карточка</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👤</text></svg>">
     <style>
         /* Базовые настройки */
         * {
@@ -13,13 +14,48 @@
             font-family: 'Arial', sans-serif;
         }
 
-        body {
+        .theme-toggle {
+            background: #2c3e50;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            border-radius: 20px;
+            padding: 10px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            color: white;
+            border: none;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.05);
+        }
+
+        .light-theme {
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+        }
+
+        .red-theme {
+            background: linear-gradient(135deg, #ffdcdc 0%, #ed8080 100%);
+            color: #333;
+        }
+
+        .dark-theme {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a1a1a 100%);
+            color: #fff;
+        }
+
+        body {
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            transition: background 0.5s ease;
         }
 
         /* Карточка */
@@ -30,6 +66,11 @@
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .business-card:hover {
+            transform: translateY(-5px);
         }
 
         /* Верхняя часть с фото */
@@ -47,6 +88,13 @@
             border: 5px solid rgba(255, 255, 255, 0.3);
             object-fit: cover;
             margin-bottom: 15px;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            color: #777;
+            font-size: 50px;
         }
 
         .name {
@@ -74,6 +122,10 @@
             border-bottom: 2px solid #f1f1f1;
         }
 
+        .dark-theme .section-title {
+            color: #d5d4d4;
+        }
+
         .form-group {
             margin-bottom: 20px;
         }
@@ -83,6 +135,10 @@
             margin-bottom: 8px;
             color: #34495e;
             font-weight: bold;
+        }
+
+        .dark-theme label {
+            color: #e0e0e0;
         }
 
         input[type="text"],
@@ -148,6 +204,34 @@
             transform: scale(1.1);
         }
 
+        /* Контакты */
+        .contact-info {
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .dark-theme .contact-info {
+            border-color: #444;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            color: #34495e;
+        }
+
+        .dark-theme .contact-item {
+            color: #d5d0d0;
+        }
+
+        .contact-icon {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
         /* Адаптивность */
         @media (max-width: 480px) {
             .business-card {
@@ -161,26 +245,51 @@
             .profile-img {
                 width: 120px;
                 height: 120px;
+                font-size: 40px;
             }
 
             .name {
                 font-size: 20px;
             }
+
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                padding: 8px 12px;
+            }
         }
     </style>
 </head>
-<body>
+<body class="light-theme">
+<button type="button" class="theme-toggle">Сменить тему</button>
 <div class="business-card">
     <div class="card-header">
-        <img src="#" alt="Моя фотография" class="profile-img">
+        <div class="profile-img">👤</div>
         <h1 class="name">Иван Иванов</h1>
         <p class="title">Frontend-разработчик</p>
     </div>
 
     <div class="card-body">
+        <h2 class="section-title">Контактная информация</h2>
+
+        <div class="contact-info">
+            <div class="contact-item">
+                <span class="contact-icon">📧</span>
+                <span>ivan@example.com</span>
+            </div>
+            <div class="contact-item">
+                <span class="contact-icon">📱</span>
+                <span>+7 (123) 456-78-90</span>
+            </div>
+            <div class="contact-item">
+                <span class="contact-icon">📍</span>
+                <span>Москва, Россия</span>
+            </div>
+        </div>
+
         <h2 class="section-title">Свяжитесь со мной</h2>
 
-        <form>
+        <form id="contact-form">
             <div class="form-group">
                 <label for="name">Имя:</label>
                 <input type="text" id="name" required placeholder="Ваше имя">
@@ -206,5 +315,7 @@
         </div>
     </div>
 </div>
+
+<script src="index.js"></script>
 </body>
 </html>
